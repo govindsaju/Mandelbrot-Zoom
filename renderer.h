@@ -1,5 +1,5 @@
-#ifndef __MANDELBROT__
-#define __MANDELBROT__
+#ifndef __RENDERER__
+#define __RENDERER__
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
