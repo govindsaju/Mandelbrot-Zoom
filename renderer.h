@@ -5,7 +5,7 @@
 #define WINDOW_HEIGHT 600
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
+#include "mandelbrot.h"
 class Renderer{
 private:
     sf::RenderWindow* window;
@@ -15,6 +15,9 @@ private:
     void initVariables();
     void initWindow();
     void pollEvents();
+    void initMandelbrot();
+
+    Mandelbrot* mandelbrot;
 
 public:
     Renderer();
