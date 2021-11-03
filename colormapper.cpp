@@ -42,7 +42,7 @@ void ColorMapper::setupPalette()
     double hue = 0.0;
     for (int i=0;i<palette_size;i++)
     {
-        palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,1,1)));
+        palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,0.6,0.7)));
         hue += increment;
     }
 }
@@ -102,7 +102,6 @@ ColorRGB ColorMapper::HSVtoRGB(ColorHSV c)
     double C = v*s;
     double X = C*(1-fabs((h/60.0) - 2*floor(h/120.0)-1));
     double m = v-C;
-    std::cout<<C<<X<<m<<std::endl;
     if (h<60)
     {
         r = C;

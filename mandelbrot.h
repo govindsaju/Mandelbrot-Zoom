@@ -4,16 +4,19 @@
 #include <SFML/Graphics.hpp>
 #include "complex.h"
 #include "coordinatemapper.h"
+#include "colormapper.h"
 
 class Mandelbrot{
 private:
-    sf::RenderWindow *window;
+    
     Complex bl,tr;  //bl is bottom left, tr is top right
     CoordinateMapper cm;
     sf::Vertex* pixels;
     int dimx,dimy;
+    ColorMapper colors;
+
 public:
-    Mandelbrot(sf::RenderWindow *_window,int dimx,int dimy);
+    Mandelbrot(int dimx,int dimy);
     ~Mandelbrot();
     sf::Color getColor(Complex c);
     void update(const Complex &_bl,const Complex &_ur);

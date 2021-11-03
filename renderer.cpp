@@ -25,12 +25,12 @@ void Renderer::initWindow()
     videoMode.height = WINDOW_HEIGHT;
     videoMode.width = WINDOW_WIDTH;
     window = new sf::RenderWindow(videoMode,"Mandelbrot Zoom", sf::Style::Titlebar | sf::Style::Close);
-    window->setFramerateLimit(60);
+    window->setFramerateLimit(20);
 }
 
 void Renderer::initMandelbrot()
 {
-    mandelbrot = new Mandelbrot(window,WINDOW_WIDTH,WINDOW_HEIGHT);
+    mandelbrot = new Mandelbrot(WINDOW_WIDTH,WINDOW_HEIGHT);
 }
 
 void Renderer::pollEvents()
@@ -51,7 +51,7 @@ void Renderer::pollEvents()
 void Renderer::update()
 {
     pollEvents();
-    mandelbrot->update(Complex(0.0,0.0),Complex(10.0,10.0));
+    mandelbrot->update(Complex(-2,-2),Complex(2,2));
 }
 
 void Renderer::render()
