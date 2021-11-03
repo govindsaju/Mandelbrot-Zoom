@@ -25,8 +25,10 @@ private:
     void zoom(Complex c, double zoomfactor);
     Complex getClickComplex();
     Mandelbrot* mandelbrot;
+    bool mouseInWindow();
 
 public:
+    double total_zoom_factor;
     Renderer();
     ~Renderer();
     void update();

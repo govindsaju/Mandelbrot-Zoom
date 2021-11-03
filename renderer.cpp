@@ -20,6 +20,7 @@ void Renderer::initVariables()
     mandelbrot = nullptr;
     bot_left = Complex(-2,-2);
     top_right = Complex(2,2);
+    total_zoom_factor = 1;
 }
 
 void Renderer::initWindow()
@@ -58,6 +59,7 @@ void Renderer::updateMousePos()
 
 void Renderer::zoom(Complex c, double zoomfactor = 1.03)
 {
+    total_zoom_factor *= zoomfactor;
     Complex g1 = top_right - c;
     Complex g2 = c - bot_left;
     g1 = g1 / zoomfactor;
@@ -75,7 +77,7 @@ void Renderer::update()
 {
     pollEvents();
     updateMousePos();
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and mouseInWindow())
     {
         zoom(getClickComplex());
     }
@@ -93,4 +95,11 @@ void Renderer::render()
 bool Renderer::running()
 {
     return window->isOpen();
+}
+
+bool Renderer::mouseInWindow()
+{
+    if (mousePos.x>0 and mousePos.x < WINDOW_WIDTH and mousePos.y>0 and mousePos.y < WINDOW_HEIGHT) 
+        return true;
+    return false;
 }
