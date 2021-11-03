@@ -14,7 +14,8 @@ Mandelbrot::~Mandelbrot()
 
 sf::Color Mandelbrot::getColor(Complex c)
 {
-    return sf::Color::Green;
+    if (c.absval()>5 and (Complex(10,10)-c).absval()>5) return sf::Color::Green;
+    else return sf::Color::Magenta;
 }
 void Mandelbrot::update(const Complex &bl, const Complex &tr)
 {
