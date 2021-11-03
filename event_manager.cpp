@@ -58,9 +58,9 @@ void EventManager::solveKeyStrokes()
             break;
         
         case sf::Keyboard::Subtract :
-        case sf::Keyboard::Hyphen :
+        case sf::Keyboard::Dash :
             zoomfactor -= 0.03;
-            std::cout<<"Zoom factor is now "<<zoomfactor;
+            std::cout<<"Zoom factor is now "<<zoomfactor<<std::endl;
             break;
 
         case sf::Keyboard::Left :
