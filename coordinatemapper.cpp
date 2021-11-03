@@ -1,11 +1,13 @@
 #include "coordinatemapper.h"
 
+//Constructor for coordinate mapper
 CoordinateMapper::CoordinateMapper(int _dimx, int _dimy) : mapping(_dimx,std::vector<Complex>(_dimy))
 {
     dimx = _dimx;
     dimy = _dimy;
 }
 
+//updates mapping based on bottom left and top right of new mapping
 void CoordinateMapper::update(Complex bl, Complex tr)
 {
     Complex tl(bl.x,tr.y) , br(tr.x,bl.y);

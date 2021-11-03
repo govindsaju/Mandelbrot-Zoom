@@ -3,6 +3,7 @@
 #include <iostream>
 #include <math.h>
 
+//Constructors for ColorRGB and ColorHSV
 ColorRGB::ColorRGB()
 {
     r = 0;
@@ -31,11 +32,13 @@ ColorHSV::ColorHSV()
     v = 1;
 }
 
+//Constructors for color mapper object
 ColorMapper::ColorMapper(int _pallete_size) :  palette_size(_pallete_size) , palette(palette_size)
 {
     setupPalette();
 }
 
+//used to setup pallete by drawing uniformly from the colour cycle
 void ColorMapper::setupPalette()
 {
     double increment = 360.0/palette_size;
@@ -47,6 +50,7 @@ void ColorMapper::setupPalette()
     }
 }
 
+//converts from RGB to HSV
 ColorHSV ColorMapper::RGBtoHSV(ColorRGB c)
 {
     double r,g,b;
@@ -91,7 +95,7 @@ ColorHSV ColorMapper::RGBtoHSV(ColorRGB c)
     return ColorHSV(h,s,v);
 }
 
-
+//Converts from HSV to RGB
 ColorRGB ColorMapper::HSVtoRGB(ColorHSV c)
 {
     double h,s,v,r,g,b;
@@ -151,7 +155,7 @@ ColorRGB ColorMapper::HSVtoRGB(ColorHSV c)
 
 }
 
-
+//Converts from ColorRGB to SFML object
 sf::Color ColorMapper::ConvertToSFML(ColorRGB c)
 {
     return sf::Color(c.r,c.g,c.b);

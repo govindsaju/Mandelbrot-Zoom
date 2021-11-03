@@ -17,7 +17,6 @@ double x,y;
 
 /**
  * @brief Construct a new Complex object, default value 0 + 0i
- * 
  */
 Complex();
 

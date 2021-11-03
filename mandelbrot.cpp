@@ -1,5 +1,7 @@
 #include "mandelbrot.h"
 #define itersize 200
+
+//constructor for mandelbrot object
 Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+15)
 {
     dimx = _dimx;
@@ -7,21 +9,20 @@ Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+
     pixels = new sf::Vertex[_dimx*_dimy];
 }
 
+//destructor for mandelbrot object
 Mandelbrot::~Mandelbrot()
 {
     delete pixels;
 }
 
+//returns a color for a given complex number, does the math of the mandelbrot set
 sf::Color Mandelbrot::getColor(Complex c)
 {
-/*
-if (c.absval()>5 and (Complex(10,10)-c).absval()>5) return sf::Color::Green;
-else return sf::Color::Magenta;
-*/
     Complex z;
     int max_iterations = itersize;
     double iteration = 0;  
 
+    //checks for convergence
     while (z.absval()<256 and iteration<max_iterations)
     {
         z = z*z + c;
@@ -44,6 +45,7 @@ else return sf::Color::Magenta;
     return c1;
 }
 
+//updates the parameters based on new bottom left and top right mapping
 void Mandelbrot::update(const Complex &bl, const Complex &tr)
 {
     cm.update(bl,tr);
@@ -58,12 +60,14 @@ void Mandelbrot::update(const Complex &bl, const Complex &tr)
     }
 }
 
+//returns the pixelarray to plot on the window
 sf::Vertex* Mandelbrot::getPixels()
 {   
     return pixels;
     
 }
 
+//returns complex value mapped to (i,j)
 Complex Mandelbrot::getComplexVal(int i, int j)
 {
     return cm.mapping[i][j];
