@@ -7,6 +7,7 @@
 #include <SFML/Window.hpp>
 #include "mandelbrot.h"
 #include "complex.h"
+#include "event_manager.h"
 
 /**
  * @brief A wrapper class to interact with SFML and control aspects of the GUI.
@@ -19,8 +20,6 @@ private:
     //Pointer to window that shows the output
     sf::RenderWindow* window;
 
-    //Event in SFML, detects events such as closing the window 
-    sf::Event ev;
 
     //VideoMode in SFML, sets the dimensions of the window, the options available in the titlebar etc
     sf::VideoMode videoMode;
@@ -28,9 +27,7 @@ private:
     //Stores the current mouse position
     sf::Vector2i mousePos;
 
-    //bot_left corresponds to the complex number currently at the bottom left,
-    //top_right has the complex number at the top right of the grid 
-    Complex bot_left, top_right;
+    EventManager events;
 
     /**
      * @brief Initialises the variables of the class.
@@ -42,10 +39,7 @@ private:
      */
     void initWindow();
 
-    /**
-     * @brief Polls the events happening on the window as a result of user action and stores then in variable ev. 
-     */
-    void pollEvents();
+
 
     /**
      * @brief Sets up the mandelbrot object initially. 
@@ -63,7 +57,7 @@ private:
      * @param Complex c is the focus at which the zoom operation is performed
      * @param zoomfactor : Factor by which each of the x and y coordinates are zoomed into
      */
-    void zoom(Complex c, double zoomfactor);
+    void zoom(Complex c);
 
     /**
      * @brief Get the complex number currently mapped to the current mouse position

@@ -23,8 +23,6 @@ void Renderer::initVariables()
 {
     window = nullptr;
     mandelbrot = nullptr;
-    bot_left = Complex(-2,-2);
-    top_right = Complex(2,2);
     total_zoom_factor = 1;
 }
 
@@ -35,29 +33,16 @@ void Renderer::initWindow()
     videoMode.width = WINDOW_WIDTH;
     window = new sf::RenderWindow(videoMode,"Mandelbrot Zoom", sf::Style::Titlebar | sf::Style::Close);
     window->setFramerateLimit(20);
+    events.setWindow(window);
 }
 
 //Creates the mandelbrot object
 void Renderer::initMandelbrot()
 {
     mandelbrot = new Mandelbrot(WINDOW_WIDTH,WINDOW_HEIGHT);
+    events.setMandelbrot(mandelbrot);
 }
 
-//Polls for events and stores them in ev
-void Renderer::pollEvents()
-{
-    while (window->pollEvent(ev))
-    {
-        switch (ev.type)
-        {
-            case sf::Event::Closed :        //if close button is pressed then close the window
-                window->close();
-                break;
-            default:
-                break;
-        }
-    }
-}
 
 //updates the mouse position in mousePos
 void Renderer::updateMousePos()
@@ -66,15 +51,16 @@ void Renderer::updateMousePos()
 }
 
 //Function to perform the zoom operation with c as focus and zoomfactor as factor of zoom in each dimension
-void Renderer::zoom(Complex c, double zoomfactor = 1.03)
+void Renderer::zoom(Complex c)
 {
+    double zoomfactor = events.zoomfactor;
     total_zoom_factor *= zoomfactor;
-    Complex g1 = top_right - c;
-    Complex g2 = c - bot_left;
+    Complex g1 = events.top_right - c;
+    Complex g2 = c - events.bot_left;
     g1 = g1 / zoomfactor;
     g2 = g2 / zoomfactor;
-    top_right = c + g1;
-    bot_left = c - g2;
+    events.top_right = c + g1;
+    events.bot_left = c - g2;
 }
 
 //Gets complex value mapped to point of current mousePos
@@ -86,13 +72,13 @@ Complex Renderer::getClickComplex()
 //updates all params and polls for events
 void Renderer::update()
 {
-    pollEvents();
+    events.pollEvents();
     updateMousePos();
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and mouseInWindow())
     {
         zoom(getClickComplex());
     }
-    mandelbrot->update(bot_left,top_right);
+    mandelbrot->update(events.bot_left,events.top_right);
 }
 
 //renders all changes onto the display window

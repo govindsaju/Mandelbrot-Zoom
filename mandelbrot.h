@@ -23,6 +23,9 @@ private:
     //object to store a color palette, used to assign colours to complex numbers depending on speed of convergence
     ColorMapper colors;
 
+    //colorshift refers to the cyclic rotation that is applied to the palette
+    int colorshift;
+
 public:
     /**
      * @brief Construct a new Mandelbrot object
@@ -68,6 +71,13 @@ public:
      * @return Complex number which is mapped to (xcoord,ycoord)
      */
     Complex getComplexVal(int xcoord, int ycoord);
+
+    /**
+     * @brief Increases the colorshift by delta
+     * 
+     * @param delta value by which colorshift is increased
+     */
+    void updateColorShift(int delta=10);
 };
 
 #endif 

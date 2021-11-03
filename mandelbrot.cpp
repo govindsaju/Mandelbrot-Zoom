@@ -7,6 +7,7 @@ Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+
     dimx = _dimx;
     dimy = _dimy;
     pixels = new sf::Vertex[_dimx*_dimy];
+    colorshift = 0;
 }
 
 //destructor for mandelbrot object
@@ -38,8 +39,8 @@ sf::Color Mandelbrot::getColor(Complex c)
     }
 
     sf::Color c1,c2;
-    c1 = colors.palette[floor(iteration)];
-    c2 = colors.palette[floor(iteration+1)];
+    c1 = colors.palette[static_cast<int>(floor(iteration)+colorshift)%colors.palette.size()];
+    c2 = colors.palette[ static_cast<int>(floor(iteration+1)+colorshift) % (colors.palette.size()) ];
 
     double coeff = iteration - floor(iteration);
     c1.r = c1.r*(1-coeff) + c2.r*(coeff);
@@ -74,4 +75,9 @@ sf::Vertex* Mandelbrot::getPixels()
 Complex Mandelbrot::getComplexVal(int i, int j)
 {
     return cm.mapping[i][j];
+}
+
+void Mandelbrot::updateColorShift(int delta)
+{
+    colorshift += delta;
 }
