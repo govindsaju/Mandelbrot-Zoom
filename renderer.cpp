@@ -57,7 +57,8 @@ void Renderer::update()
 void Renderer::render()
 {
     window->clear();
-    mandelbrot->render();
+    sf::Vertex* pixels= mandelbrot->getPixels();
+    window->draw(pixels,WINDOW_HEIGHT*WINDOW_WIDTH,sf::Points);
     window->display();
 }
 

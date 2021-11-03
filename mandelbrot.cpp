@@ -1,11 +1,17 @@
 #include "mandelbrot.h"
 
-Mandelbrot::Mandelbrot(sf::RenderWindow *_window,int _dimx,int _dimy) : cm(_dimx,_dimy)
+Mandelbrot::Mandelbrot(sf::RenderWindow *_window,int _dimx,int _dimy) : cm(_dimx,_dimy) 
 {
-    pixels.resize(dimx*dimy);
     dimx = _dimx;
     dimy = _dimy;
+    pixels = new sf::Vertex[_dimx*_dimy];
 }
+
+Mandelbrot::~Mandelbrot()
+{
+    delete pixels;
+}
+
 sf::Color Mandelbrot::getColor(Complex c)
 {
     return sf::Color::Green;
@@ -24,7 +30,8 @@ void Mandelbrot::update(const Complex &bl, const Complex &tr)
     }
 }
 
-void Mandelbrot::render()
-{
-    window->draw(pixels);
+sf::Vertex* Mandelbrot::getPixels()
+{   
+    return pixels;
+    
 }
