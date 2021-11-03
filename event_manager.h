@@ -23,5 +23,6 @@ public:
      * @brief Polls the events happening on the window as a result of user action and stores then in variable ev. 
      */
     void pollEvents();
+    void saveFig();
 
 };

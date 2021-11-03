@@ -1,4 +1,9 @@
 #include "event_manager.h"
+#include <chrono>
+#include <ctime>
+#include <sstream>
+#include <string>
+#include <iomanip>
 
 EventManager::EventManager()
 {
@@ -49,11 +54,13 @@ void EventManager::solveKeyStrokes()
         case  sf::Keyboard::Equal :
         case sf::Keyboard::Add :
             zoomfactor += 0.03;
+            std::cout<<"Zoom factor is now "<<zoomfactor<<std::endl;
             break;
         
         case sf::Keyboard::Subtract :
         case sf::Keyboard::Hyphen :
             zoomfactor -= 0.03;
+            std::cout<<"Zoom factor is now "<<zoomfactor;
             break;
 
         case sf::Keyboard::Left :
@@ -80,5 +87,32 @@ void EventManager::solveKeyStrokes()
             bot_left = bot_left - shift;
             break;
 
+        case sf::Keyboard::S :
+            saveFig();
+
+    }
+}
+
+void EventManager::saveFig()
+{
+    auto currtime = std::chrono::system_clock::now();
+    auto in_time_t_format = std::chrono::system_clock::to_time_t(currtime);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t_format),"%Y-%m-%d %X");
+    std::string filename = ss.str();
+    std::string s="mandelbrot-";
+    for (auto c:filename)
+    {   
+        if (c==' ') s+='-';
+        else if (c!=':') s+=c;
+        else s+='-';
+    }
+    filename = s + ".png";
+    sf::Texture texture;
+    texture.create(window->getSize().x,window->getSize().y);
+    texture.update(*window);
+    if (texture.copyToImage().saveToFile(filename))
+    {
+        std::cout<<"File saved to "<<filename<<std::endl;
     }
 }
