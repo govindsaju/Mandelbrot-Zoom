@@ -1,6 +1,7 @@
 #include "renderer.h"
 using namespace std;
 
+//Constructor for renderer
 Renderer::Renderer() 
 {
     initVariables();
@@ -8,12 +9,16 @@ Renderer::Renderer()
     initMandelbrot();
 }
 
+
+//Destructor for renderer
 Renderer::~Renderer()
 {
     delete window;
     delete mandelbrot;
 }
 
+
+//Initialises variables of renderer
 void Renderer::initVariables()
 {
     window = nullptr;
@@ -23,6 +28,7 @@ void Renderer::initVariables()
     total_zoom_factor = 1;
 }
 
+//Creates the window and sets frame limit
 void Renderer::initWindow()
 {
     videoMode.height = WINDOW_HEIGHT;
@@ -31,18 +37,20 @@ void Renderer::initWindow()
     window->setFramerateLimit(20);
 }
 
+//Creates the mandelbrot object
 void Renderer::initMandelbrot()
 {
     mandelbrot = new Mandelbrot(WINDOW_WIDTH,WINDOW_HEIGHT);
 }
 
+//Polls for events and stores them in ev
 void Renderer::pollEvents()
 {
     while (window->pollEvent(ev))
     {
         switch (ev.type)
         {
-            case sf::Event::Closed :
+            case sf::Event::Closed :        //if close button is pressed then close the window
                 window->close();
                 break;
             default:
@@ -51,12 +59,13 @@ void Renderer::pollEvents()
     }
 }
 
+//updates the mouse position in mousePos
 void Renderer::updateMousePos()
 {
     mousePos = sf::Mouse::getPosition(*window);
 }
 
-
+//Function to perform the zoom operation with c as focus and zoomfactor as factor of zoom in each dimension
 void Renderer::zoom(Complex c, double zoomfactor = 1.03)
 {
     total_zoom_factor *= zoomfactor;
@@ -68,11 +77,13 @@ void Renderer::zoom(Complex c, double zoomfactor = 1.03)
     bot_left = c - g2;
 }
 
+//Gets complex value mapped to point of current mousePos
 Complex Renderer::getClickComplex()
 {
     return mandelbrot->getComplexVal(mousePos.x,mousePos.y);
 }
 
+//updates all params and polls for events
 void Renderer::update()
 {
     pollEvents();
@@ -84,6 +95,7 @@ void Renderer::update()
     mandelbrot->update(bot_left,top_right);
 }
 
+//renders all changes onto the display window
 void Renderer::render()
 {
     window->clear();
@@ -92,11 +104,13 @@ void Renderer::render()
     window->display();
 }
 
+//checks if display window is open or not
 bool Renderer::running()
 {
     return window->isOpen();
 }
 
+//checks if mouse is in the window or not
 bool Renderer::mouseInWindow()
 {
     if (mousePos.x>0 and mousePos.x < WINDOW_WIDTH and mousePos.y>0 and mousePos.y < WINDOW_HEIGHT) 
