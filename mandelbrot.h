@@ -21,6 +21,7 @@ public:
     sf::Color getColor(Complex c);
     void update(const Complex &_bl,const Complex &_ur);
     sf::Vertex* getPixels();
+    Complex getComplexVal(int xcoord, int ycoord);
 };
 
 #endif 

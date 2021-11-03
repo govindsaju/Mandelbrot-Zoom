@@ -27,7 +27,8 @@ else return sf::Color::Magenta;
         z = z*z + c;
         iteration+=1;
     }
-
+    bool converges = true;
+    if (iteration>=max_iterations) return sf::Color(0,0,0);
     if (iteration<max_iterations)
     {
         double log_zn = log(z.absval());
@@ -61,4 +62,9 @@ sf::Vertex* Mandelbrot::getPixels()
 {   
     return pixels;
     
+}
+
+Complex Mandelbrot::getComplexVal(int i, int j)
+{
+    return cm.mapping[i][j];
 }

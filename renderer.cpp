@@ -18,6 +18,8 @@ void Renderer::initVariables()
 {
     window = nullptr;
     mandelbrot = nullptr;
+    bot_left = Complex(-2,-2);
+    top_right = Complex(2,2);
 }
 
 void Renderer::initWindow()
@@ -48,10 +50,36 @@ void Renderer::pollEvents()
     }
 }
 
+void Renderer::updateMousePos()
+{
+    mousePos = sf::Mouse::getPosition(*window);
+}
+
+
+void Renderer::zoom(Complex c, double zoomfactor = 1.03)
+{
+    Complex g1 = top_right - c;
+    Complex g2 = c - bot_left;
+    g1 = g1 / zoomfactor;
+    g2 = g2 / zoomfactor;
+    top_right = c + g1;
+    bot_left = c - g2;
+}
+
+Complex Renderer::getClickComplex()
+{
+    return mandelbrot->getComplexVal(mousePos.x,mousePos.y);
+}
+
 void Renderer::update()
 {
     pollEvents();
-    mandelbrot->update(Complex(-2,-2),Complex(2,2));
+    updateMousePos();
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        zoom(getClickComplex());
+    }
+    mandelbrot->update(bot_left,top_right);
 }
 
 void Renderer::render()
