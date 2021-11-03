@@ -40,8 +40,11 @@ sf::Color Mandelbrot::getColor(Complex c)
     sf::Color c1,c2;
     c1 = colors.palette[floor(iteration)];
     c2 = colors.palette[floor(iteration+1)];
-    //todo linear interpolation
 
+    double coeff = iteration - floor(iteration);
+    c1.r = c1.r*(1-coeff) + c2.r*(coeff);
+    c1.g = c1.g*(1-coeff) + c2.g*(coeff);
+    c1.b = c1.b*(1-coeff) + c2.b*(coeff);
     return c1;
 }
 
