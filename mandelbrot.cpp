@@ -30,7 +30,9 @@ sf::Color Mandelbrot::getColor(Complex c)
         iteration+=1;
     }
     bool converges = true;
-    if (iteration>=max_iterations) return sf::Color(0,0,0);
+    if (iteration>=max_iterations) return sf::Color(0,0,0); //if inside mandelbrot set, paint it black
+
+    //converting iteration number to real number to reduce discreteness
     if (iteration<max_iterations)
     {
         double log_zn = log(z.absval());
@@ -38,6 +40,7 @@ sf::Color Mandelbrot::getColor(Complex c)
         iteration = iteration + 1 - nu;
     }
 
+    //Obtain colours , perform linear interpolation to obtain smooth boundaries 
     sf::Color c1,c2;
     c1 = colors.palette[static_cast<int>(floor(iteration)+colorshift)%colors.palette.size()];
     c2 = colors.palette[ static_cast<int>(floor(iteration+1)+colorshift) % (colors.palette.size()) ];
@@ -46,6 +49,7 @@ sf::Color Mandelbrot::getColor(Complex c)
     c1.r = c1.r*(1-coeff) + c2.r*(coeff);
     c1.g = c1.g*(1-coeff) + c2.g*(coeff);
     c1.b = c1.b*(1-coeff) + c2.b*(coeff);
+
     return c1;
 }
 
@@ -77,6 +81,7 @@ Complex Mandelbrot::getComplexVal(int i, int j)
     return cm.mapping[i][j];
 }
 
+//Shifts the palette by delta
 void Mandelbrot::updateColorShift(int delta)
 {
     colorshift += delta;

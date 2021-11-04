@@ -1,3 +1,9 @@
+/**
+ * @file renderer.h
+ * @brief Definition of class Renderer
+ * 
+ */
+
 #ifndef __RENDERER__
 #define __RENDERER__
 
@@ -27,6 +33,7 @@ private:
     //Stores the current mouse position
     sf::Vector2i mousePos;
 
+    //Event manager to log all events and take appropriate actions
     EventManager events;
 
     /**
@@ -52,10 +59,9 @@ private:
     void updateMousePos();
 
     /**
-     * @brief A function to perform the zoom operation on the mandelbrot set
+     * @brief A function to perform the zoom operation on the mandelbrot set, factor for zooming obtained from event manager
      * 
      * @param Complex c is the focus at which the zoom operation is performed
-     * @param zoomfactor : Factor by which each of the x and y coordinates are zoomed into
      */
     void zoom(Complex c);
 

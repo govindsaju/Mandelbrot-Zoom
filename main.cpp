@@ -7,18 +7,18 @@ using namespace std;
 
 int main()
 {
-    Renderer renderer;
+    Renderer renderer;  //Renderer object to display the mandelbrot zoom
 
-    auto start = chrono::system_clock::now();
-    int counter = 0;
+    auto start = chrono::system_clock::now();   //time counter to measure FPS
+    int counter = 0;                       //Frame counter
     while (renderer.running())
     {
         counter++;
         renderer.update();
         renderer.render();
     }
-    auto end = chrono::system_clock::now();
-    auto time = std::chrono::duration_cast<std::chrono::seconds>(end-start);
+    auto end = chrono::system_clock::now();     //time of completion
+    auto time = std::chrono::duration_cast<std::chrono::seconds>(end-start);    //time elapsed
 
-    cout<<"FPS :"<<counter/time.count()<<"\n";
+    cout<<"FPS :"<<counter/time.count()<<"\n";  
 }

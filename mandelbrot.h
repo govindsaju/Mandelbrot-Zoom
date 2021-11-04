@@ -1,3 +1,8 @@
+/**
+ * @file mandelbrot.h
+ * @brief File for defining class Mandelbrot
+ */
+
 #ifndef __MANDELBROT__
 #define __MANDELBROT__
 
@@ -6,6 +11,9 @@
 #include "coordinatemapper.h"
 #include "colormapper.h"
 
+/**
+ * @brief Class for rendering the mandelbrot set given coordinates on complex plane
+ */
 class Mandelbrot{
 private:
     //Stores the values of bottom left and top right of the current mapping
@@ -59,7 +67,7 @@ public:
     /**
      * @brief Get the array of pixels to paint the entire display window
      * 
-     * @return sf::Vertex* 
+     * @return sf::Vertex* An array of pixels to be plotted on screen
      */
     sf::Vertex* getPixels();
 

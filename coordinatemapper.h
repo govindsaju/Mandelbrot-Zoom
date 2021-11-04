@@ -1,3 +1,8 @@
+/**
+ * @file coordinatemapper.h
+ * @brief File for defining CoordinateMapper class
+ */
+
 #ifndef __COORDINATE_MAPPER_H__
 #define __COORDINATE_MAPPER_H__
 

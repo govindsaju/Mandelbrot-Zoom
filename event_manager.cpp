@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 
+//Constructor for event manager
 EventManager::EventManager()
 {
     window = nullptr;
@@ -13,11 +14,13 @@ EventManager::EventManager()
     zoomfactor = 1.05;
 }
 
+//sets window object
 void EventManager::setWindow(sf::RenderWindow *_window)
 {
     window = _window;
 }
 
+//sets mandelbrot object
 void EventManager::setMandelbrot(Mandelbrot *_mandelbrot)
 {
     mandelbrot = _mandelbrot;
@@ -42,9 +45,10 @@ void EventManager::pollEvents()
     }
 }
 
+//resolves keystrokes and takes action
 void EventManager::solveKeyStrokes()
 {
-    Complex shift;
+    Complex shift;      //to model shift in coordinates if arrow keys are pressed
     switch (ev.key.code)
     {
         case sf::Keyboard::I :
@@ -63,6 +67,7 @@ void EventManager::solveKeyStrokes()
             std::cout<<"Zoom factor is now "<<zoomfactor<<std::endl;
             break;
 
+        //Shift is in units of 1/10th window dimension
         case sf::Keyboard::Left :
             shift = Complex(top_right.x-bot_left.x,0) / 10;
             top_right = top_right - shift;
@@ -94,7 +99,8 @@ void EventManager::solveKeyStrokes()
 }
 
 void EventManager::saveFig()
-{
+{   
+    //this part is to get the filename from system time
     auto currtime = std::chrono::system_clock::now();
     auto in_time_t_format = std::chrono::system_clock::to_time_t(currtime);
     std::stringstream ss;
@@ -109,6 +115,8 @@ void EventManager::saveFig()
     }
     filename = s + ".png";
     sf::Texture texture;
+
+    //this part is to save the image
     texture.create(window->getSize().x,window->getSize().y);
     texture.update(*window);
     if (texture.copyToImage().saveToFile(filename))

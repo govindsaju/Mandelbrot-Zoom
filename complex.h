@@ -1,3 +1,7 @@
+/**
+ * @file complex.h
+ * @brief File for defining Complex class
+ */
 #ifndef __COMPLEX__
 #define __COMPLEX__
 

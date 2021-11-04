@@ -1,3 +1,7 @@
+/**
+ * @file colormapper.h
+ * @brief File for defining structs ColorRGB and ColorHSV, also defines class ColorMapper
+ */
 #ifndef __COLOR_MAPPER__
 #define __COLOR_MAPPER__
 

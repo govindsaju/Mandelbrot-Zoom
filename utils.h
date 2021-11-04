@@ -1,4 +1,8 @@
-//Contains a few utility functions
+/**
+ * @file utils.h
+ * @brief Contains a few utility functions
+ */
+
 
 /**
  * @brief returns min of 3 parameters
