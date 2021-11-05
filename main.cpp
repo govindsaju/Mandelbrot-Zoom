@@ -10,10 +10,10 @@ int main()
     Renderer renderer;  //Renderer object to display the mandelbrot zoom
 
     auto start = chrono::system_clock::now();   //time counter to measure FPS
-    int counter = 0;                       //Frame counter
+    double counter = 0;                       //Frame counter
     while (renderer.running())
     {
-        counter++;
+        counter+=1;
         renderer.update();
         renderer.render();
     }

@@ -1,5 +1,6 @@
 #include "mandelbrot.h"
-#define itersize 200
+#define itersize 600
+#define numthreads 8
 
 //constructor for mandelbrot object
 Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+15)
@@ -8,6 +9,7 @@ Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+
     dimy = _dimy;
     pixels = new sf::Vertex[_dimx*_dimy];
     colorshift = 0;
+    
 }
 
 //destructor for mandelbrot object
@@ -53,6 +55,12 @@ sf::Color Mandelbrot::getColor(Complex c)
     return c1;
 }
 
+void Mandelbrot::update_pixel(int i,int j)
+{
+    pixels[i*dimy + j].position.x = i;
+    pixels[i*dimy + j].position.y = j;
+    pixels[i*dimy + j].color = getColor(cm.mapping[i][j]);
+}
 //updates the parameters based on new bottom left and top right mapping
 void Mandelbrot::update(const Complex &bl, const Complex &tr)
 {
@@ -61,13 +69,42 @@ void Mandelbrot::update(const Complex &bl, const Complex &tr)
     {
         for (int j=0;j<dimy;j++)
         {
-            pixels[i*dimy + j].position.x = i;
-            pixels[i*dimy + j].position.y = j;
-            pixels[i*dimy + j].color = getColor(cm.mapping[i][j]);
+           update_pixel(i,j);
         }
     }
+
 }
 
+
+void Mandelbrot::update_multithreaded(const Complex &bl, const Complex &tr)
+{
+    cm.update(bl,tr);
+    std::vector<sf::Vertex> vertices[numthreads];
+    std::thread threads[numthreads];
+
+    for (int i=0;i<numthreads;i++)
+    {
+        threads[i] = std::thread((RunThread()),i,colors,std::ref(vertices[i]),cm,colorshift,dimx,dimy,numthreads,itersize);
+
+    }
+
+    for (int i=0;i<numthreads;i++)
+    {
+        threads[i].join();
+    }
+
+    for (int i=0;i<dimx;i++)
+    {
+        for (int j=0;j<dimy;j++)
+        {
+            int compartment_number = i/(dimx/numthreads);
+            int i_inside = i - (compartment_number * (dimx/numthreads));
+            pixels[i*dimy+j] = vertices[compartment_number][i_inside * dimy + j];
+        }
+    }
+
+
+}
 //returns the pixelarray to plot on the window
 sf::Vertex* Mandelbrot::getPixels()
 {   

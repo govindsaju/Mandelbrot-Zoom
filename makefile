@@ -1,6 +1,6 @@
 .PHONY : mandelbrot
 mandelbrot:
 	g++ -g -c *.cpp
-	g++ -g -o mandelbrot *.o -lsfml-graphics -lsfml-window -lsfml-system
+	g++ -g -o mandelbrot *.o -lsfml-graphics -lsfml-window -lsfml-system -lpthread
 	rm *.o
 

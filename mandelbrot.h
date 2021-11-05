@@ -7,9 +7,11 @@
 #define __MANDELBROT__
 
 #include <SFML/Graphics.hpp>
+#include <thread>
 #include "complex.h"
 #include "coordinatemapper.h"
 #include "colormapper.h"
+#include "multithreading.h"
 
 /**
  * @brief Class for rendering the mandelbrot set given coordinates on complex plane
@@ -28,11 +30,15 @@ private:
     //dimensions of the window
     int dimx,dimy;
 
+
+    
     //object to store a color palette, used to assign colours to complex numbers depending on speed of convergence
     ColorMapper colors;
 
     //colorshift refers to the cyclic rotation that is applied to the palette
     int colorshift;
+
+
 
 public:
     /**
@@ -64,6 +70,8 @@ public:
      */
     void update(const Complex &_bl,const Complex &_ur);
 
+    void update_multithreaded(const Complex &_bl, const Complex &ur);
+
     /**
      * @brief Get the array of pixels to paint the entire display window
      * 
@@ -86,6 +94,14 @@ public:
      * @param delta value by which colorshift is increased
      */
     void updateColorShift(int delta=10);
+
+    /**
+     * @brief updates colour of the pixel (i,j);
+     * 
+     * @param i 
+     * @param j 
+     */
+    void update_pixel(int i,int j);
 };
 
 #endif 
