@@ -58,7 +58,7 @@ void Details::renderBounds()
     int siz = 20;
     std::ostringstream ss;  
     sf::Text bounds;
-    ss << std::fixed << std::setprecision(8);
+    ss << std::fixed << std::setprecision(14);
     ss << "Lower left  \t" << bl.x <<" + "<<bl.y<<"i\n" << "Upper right \t"<<tr.x<<" + "<<tr.y<<"i\n";
     bounds.setFont(font);
     bounds.setString(ss.str());
@@ -104,6 +104,7 @@ void Details::renderInstructions()
     int siz = 18;
     instructions[1].setFont(font);
     ss << "Click with mouse to zoom with that point as focus\n";
+    ss << "Click the key A to toggle autozoom on or off\n";
     ss << "Press the + or = key to increase zoomfactor\n";
     ss << "Press the - or _ key to reduce zoomfactor\n";
     ss << "Use the arrow keys to alter region of display\n";

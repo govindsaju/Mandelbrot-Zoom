@@ -13,6 +13,7 @@ EventManager::EventManager()
     top_right = Complex(2,2);
     zoomfactor = 1.05;
     isDetails=false;
+    autoZoom = false;
 }
 
 //sets window object
@@ -99,6 +100,9 @@ void EventManager::solveKeyStrokes()
         case sf::Keyboard::Escape :
             isDetails = !isDetails;
             break;
+
+        case sf::Keyboard::A :
+            autoZoom = !autoZoom;
 
     }
 }

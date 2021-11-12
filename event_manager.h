@@ -34,7 +34,10 @@ public:
     double zoomfactor;
 
     Details details;
+
     bool isDetails;
+
+    bool autoZoom;
     /**
      * @brief Construct a new Event Manager object
      */

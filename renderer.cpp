@@ -25,6 +25,7 @@ void Renderer::initVariables()
     mandelbrot = nullptr;
     total_zoom_factor = 1;
     events.isDetails = false;
+    autoZoomFocus = Complex(-0.03358230000162,0.6519894699999);
 }
 
 //Creates the window and sets frame limit
@@ -78,9 +79,13 @@ void Renderer::update()
     updateMousePos();
     if (events.isDetails==false)
     {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and mouseInWindow())
+        if (events.autoZoom==false and sf::Mouse::isButtonPressed(sf::Mouse::Left) and mouseInWindow())
         {
             zoom(getClickComplex());
+        }
+        else if (events.autoZoom)
+        {
+            zoom(autoZoomFocus);
         }
         //mandelbrot->update_multithreaded(events.bot_left,events.top_right);
         mandelbrot->update(events.bot_left,events.top_right);
