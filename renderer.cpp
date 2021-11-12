@@ -24,6 +24,7 @@ void Renderer::initVariables()
     window = nullptr;
     mandelbrot = nullptr;
     total_zoom_factor = 1;
+    events.isDetails = false;
 }
 
 //Creates the window and sets frame limit
@@ -34,6 +35,7 @@ void Renderer::initWindow()
     window = new sf::RenderWindow(videoMode,"Mandelbrot Zoom", sf::Style::Titlebar | sf::Style::Close);
     window->setFramerateLimit(20);
     events.setWindow(window);
+    events.details.setWindow(window);
 }
 
 //Creates the mandelbrot object
@@ -74,20 +76,34 @@ void Renderer::update()
 {
     events.pollEvents();
     updateMousePos();
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and mouseInWindow())
+    if (events.isDetails==false)
     {
-        zoom(getClickComplex());
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) and mouseInWindow())
+        {
+            zoom(getClickComplex());
+        }
+        //mandelbrot->update_multithreaded(events.bot_left,events.top_right);
+        mandelbrot->update(events.bot_left,events.top_right);
     }
-    //mandelbrot->update_multithreaded(events.bot_left,events.top_right);
-    mandelbrot->update(events.bot_left,events.top_right);
+    else
+    {
+        events.details.setZoomFactor(events.zoomfactor);
+    }
 }
 
 //renders all changes onto the display window
 void Renderer::render()
 {
     window->clear();
-    sf::Vertex* pixels= mandelbrot->getPixels();
-    window->draw(pixels,WINDOW_HEIGHT*WINDOW_WIDTH,sf::Points);
+    if (events.isDetails==false)
+    {
+        sf::Vertex* pixels= mandelbrot->getPixels();
+        window->draw(pixels,WINDOW_HEIGHT*WINDOW_WIDTH,sf::Points);
+    }
+    else
+    {
+        events.details.render();
+    }
     window->display();
 }
 

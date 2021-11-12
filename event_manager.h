@@ -5,7 +5,7 @@
 #ifndef __EVENT_MANAGER__
 #define __EVENT_MANAGER__
 
- 
+#include "details.h"
 #include <SFML/Graphics.hpp>
 #include "complex.h"
 #include "mandelbrot.h"
@@ -33,6 +33,8 @@ public:
     //Factor by which zoom is being performed
     double zoomfactor;
 
+    Details details;
+    bool isDetails;
     /**
      * @brief Construct a new Event Manager object
      */

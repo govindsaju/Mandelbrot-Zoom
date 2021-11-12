@@ -36,6 +36,7 @@ private:
     //Event manager to log all events and take appropriate actions
     EventManager events;
 
+
     /**
      * @brief Initialises the variables of the class.
      */

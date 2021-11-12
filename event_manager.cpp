@@ -12,6 +12,7 @@ EventManager::EventManager()
     bot_left = Complex(-2,-2);
     top_right = Complex(2,2);
     zoomfactor = 1.05;
+    isDetails=false;
 }
 
 //sets window object
@@ -58,13 +59,11 @@ void EventManager::solveKeyStrokes()
         case  sf::Keyboard::Equal :
         case sf::Keyboard::Add :
             zoomfactor += 0.03;
-            std::cout<<"Zoom factor is now "<<zoomfactor<<std::endl;
             break;
         
         case sf::Keyboard::Subtract :
         case sf::Keyboard::Dash :
             zoomfactor -= 0.03;
-            std::cout<<"Zoom factor is now "<<zoomfactor<<std::endl;
             break;
 
         //Shift is in units of 1/10th window dimension
@@ -94,6 +93,11 @@ void EventManager::solveKeyStrokes()
 
         case sf::Keyboard::S :
             saveFig();
+            break;
+
+        case sf::Keyboard::D :
+            isDetails = !isDetails;
+            break;
 
     }
 }
