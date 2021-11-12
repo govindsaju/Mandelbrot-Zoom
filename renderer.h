@@ -7,8 +7,8 @@
 #ifndef __RENDERER__
 #define __RENDERER__
 
-#define WINDOW_WIDTH 400
-#define WINDOW_HEIGHT 400
+#define WINDOW_WIDTH 560
+#define WINDOW_HEIGHT 560
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "mandelbrot.h"

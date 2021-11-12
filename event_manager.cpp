@@ -96,6 +96,7 @@ void EventManager::solveKeyStrokes()
             break;
 
         case sf::Keyboard::D :
+        case sf::Keyboard::Escape :
             isDetails = !isDetails;
             break;
 

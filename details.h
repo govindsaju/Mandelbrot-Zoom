@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 #include "complex.h"
-
+#include <iomanip>
 class Details{
 private:
     sf::Font font;
@@ -11,6 +11,12 @@ private:
     Complex bl,tr;
     double zoomfactor;
     double totalzoom;
+    int nextpos;
+
+    void renderInstructions();
+    void renderZoom();
+    void renderBounds();
+
 public:
     Details();
     void setZoomFactor(double zm);
