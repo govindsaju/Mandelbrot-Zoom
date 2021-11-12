@@ -6,6 +6,8 @@
 #ifndef __MANDELBROT__
 #define __MANDELBROT__
 
+
+#include <math.h>
 #include <SFML/Graphics.hpp>
 #include <thread>
 #include "complex.h"
@@ -31,7 +33,8 @@ private:
     int dimx,dimy;
 
 
-    
+    int max_iterations;
+
     //object to store a color palette, used to assign colours to complex numbers depending on speed of convergence
     ColorMapper colors;
 
@@ -71,6 +74,8 @@ public:
     void update(const Complex &_bl,const Complex &_ur);
 
     void update_multithreaded(const Complex &_bl, const Complex &ur);
+
+    void updateMaxIterations();
 
     /**
      * @brief Get the array of pixels to paint the entire display window

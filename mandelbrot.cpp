@@ -1,6 +1,6 @@
 #include "mandelbrot.h"
-#define itersize 600
 #define numthreads 8
+#define itersize 200
 
 //constructor for mandelbrot object
 Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+15)
@@ -9,7 +9,7 @@ Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+
     dimy = _dimy;
     pixels = new sf::Vertex[_dimx*_dimy];
     colorshift = 0;
-    
+    max_iterations = itersize;
 }
 
 //destructor for mandelbrot object
@@ -22,7 +22,6 @@ Mandelbrot::~Mandelbrot()
 sf::Color Mandelbrot::getColor(Complex c)
 {
     Complex z;
-    int max_iterations = itersize;
     double iteration = 0;  
 
     //checks for convergence
@@ -61,10 +60,12 @@ void Mandelbrot::update_pixel(int i,int j)
     pixels[i*dimy + j].position.y = j;
     pixels[i*dimy + j].color = getColor(cm.findmapping(i,j));
 }
+
 //updates the parameters based on new bottom left and top right mapping
 void Mandelbrot::update(const Complex &bl, const Complex &tr)
 {
     cm.update(bl,tr);
+    updateMaxIterations();
     for (int i=0;i<dimx;i++)
     {
         for (int j=0;j<dimy;j++)
@@ -123,4 +124,14 @@ Complex Mandelbrot::getComplexVal(int i, int j)
 void Mandelbrot::updateColorShift(int delta)
 {
     colorshift += delta;
+}
+
+void Mandelbrot::updateMaxIterations()
+{
+    double magnitude = (tr-bl).absval();
+    magnitude = -1*(floor(log10(magnitude)));
+    if (magnitude < 5) max_iterations = itersize;
+    else if (magnitude < 8) max_iterations = itersize + 300;
+    else if (magnitude < 10) max_iterations = itersize + 600;
+    else max_iterations = itersize + 1000;
 }
