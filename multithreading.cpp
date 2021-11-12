@@ -40,9 +40,10 @@ void RunThread::operator()(int threadindex, ColorMapper colors, std::vector<sf::
     int i_min = threadindex*(dimx/numthreads);
     int i_max;
 
-    pixels.resize((i_max-i_min+1)*dimy);
     if (threadindex==numthreads-1) i_max = dimx-1;
     else i_max = (threadindex+1)*(dimx/numthreads) - 1;
+    pixels.resize((i_max-i_min+1)*dimy);
+
 
     for (int i=i_min;i<=i_max;i++)
     {
@@ -51,7 +52,7 @@ void RunThread::operator()(int threadindex, ColorMapper colors, std::vector<sf::
         {
             pixels[i_vec_index*dimy + j].position.x = i;
             pixels[i_vec_index*dimy + j].position.y = j;
-            pixels[i_vec_index*dimy + j].color = getColor(cm.mapping[i][j],colors,colorshift,maxiterations);
+            pixels[i_vec_index*dimy + j].color = getColor(cm.findmapping(i,j),colors,colorshift,maxiterations);
         }
     }
 }

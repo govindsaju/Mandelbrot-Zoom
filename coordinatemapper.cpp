@@ -1,31 +1,26 @@
 #include "coordinatemapper.h"
 
 //Constructor for coordinate mapper
-CoordinateMapper::CoordinateMapper(int _dimx, int _dimy) : mapping(_dimx,std::vector<Complex>(_dimy))
+CoordinateMapper::CoordinateMapper(int _dimx, int _dimy)
 {
     dimx = _dimx;
     dimy = _dimy;
 }
 
 //updates mapping based on bottom left and top right of new mapping
-void CoordinateMapper::update(Complex bl, Complex tr)
+void CoordinateMapper::update(Complex _bl, Complex _tr)
 {
-    Complex tl(bl.x,tr.y) , br(tr.x,bl.y);
-    Complex x_incr = (br-bl)/(dimx-1);
-    Complex y_incr = (tr-br)/(dimy-1) * (-1);
+    bl = _bl;
+    tr = _tr;
+    tl = Complex(bl.x,tr.y) ;
+    br = Complex(tr.x,bl.y);
+    x_incr = (br-bl)/(dimx-1);
+    y_incr = (tr-br)/(dimy-1) * (-1);
 
-    mapping[0][0] = tl;
+}
 
-    for (int i=1;i<dimx;i++)
-    {
-        mapping[i][0] = mapping[i-1][0] + x_incr;
-    }
-
-    for (int i=0;i<dimx;i++)
-    {
-        for (int j=1;j<dimy;j++)
-        {
-            mapping[i][j] = mapping[i][j-1] + y_incr;
-        }
-    }
+Complex CoordinateMapper::findmapping(int i, int j)
+{
+    //return tl + i*x_incr + j*y_incr;
+    return Complex(tl.x+i*x_incr.x + j*y_incr.x,tl.y+i*x_incr.y+j*y_incr.y);
 }

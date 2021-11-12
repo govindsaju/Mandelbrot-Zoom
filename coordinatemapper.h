@@ -15,10 +15,9 @@
 class CoordinateMapper{
 private:
     int dimx,dimy;
+    Complex tl,br,bl,tr;
+    Complex x_incr,y_incr;
 public:
-    //Stores the mapping of the window coordinates to the complex plane, mapping[i][j] stores
-    //complex value at pixel (i,j) 
-    std::vector<std::vector<Complex>> mapping;
 
     /**
      * @brief Construct a new Coordinate Mapper object with given dimensions of the window
@@ -34,6 +33,8 @@ public:
      * @param tr tr stands for top right. It is the complex number to be used in the top right of the window.
      */
     void update(Complex bl, Complex tr);
+
+    Complex findmapping(int i, int j);
 };
 
 #endif
