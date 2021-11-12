@@ -88,6 +88,8 @@ void Renderer::update()
     else
     {
         events.details.setZoomFactor(events.zoomfactor);
+        events.details.setBounds(events.bot_left,events.top_right);
+        events.details.setTotalZoom(total_zoom_factor);
     }
 }
 
