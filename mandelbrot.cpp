@@ -65,6 +65,8 @@ void Mandelbrot::update_pixel(int i,int j)
 void Mandelbrot::update(const Complex &bl, const Complex &tr)
 {
     cm.update(bl,tr);
+    this->bl = bl;
+    this->tr = tr;
     updateMaxIterations();
     for (int i=0;i<dimx;i++)
     {
@@ -129,9 +131,6 @@ void Mandelbrot::updateColorShift(int delta)
 void Mandelbrot::updateMaxIterations()
 {
     double magnitude = (tr-bl).absval();
-    magnitude = -1*(floor(log10(magnitude)));
-    if (magnitude < 5) max_iterations = itersize;
-    else if (magnitude < 8) max_iterations = itersize + 300;
-    else if (magnitude < 10) max_iterations = itersize + 600;
-    else max_iterations = itersize + 1000;
+    max_iterations = itersize + 100*(-log10(magnitude/4));
+    max_iterations = std::max(max_iterations,itersize);
 }
