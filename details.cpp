@@ -2,7 +2,7 @@
 
 Details::Details()
 {
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("DejaVuSerifCondensed.ttf"))
     {
         std::cout<<"Could not load font!\n";
         return;
