@@ -33,11 +33,15 @@ public:
     //Factor by which zoom is being performed
     double zoomfactor;
 
+    //Object for managing the data displayed to the user
     Details details;
 
+    //True if the current window is showing details, false if showing mandelbrot
     bool isDetails;
 
+    //True if zoom if happening automatically to a fixed point
     bool autoZoom;
+
     /**
      * @brief Construct a new Event Manager object
      */
@@ -45,14 +49,12 @@ public:
 
     /**
      * @brief Set the window pointer
-     * 
      * @param _window Pointer to window being rendered
      */
     void setWindow(sf::RenderWindow *_window);
 
     /**
      * @brief Set the Mandelbrot pointer
-     * 
      * @param _mandelbrot Pointer to mandelbrot object
      */
     void setMandelbrot(Mandelbrot *_mandelbrot);
