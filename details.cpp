@@ -10,6 +10,7 @@ Details::Details()
     window = nullptr;
     zoomfactor = 1;
     nextpos = 2;
+    colormode = 1;
 }
 
 void Details::setZoomFactor(double zm)
@@ -33,6 +34,11 @@ void Details::setTotalZoom(double val)
     totalzoom = val;
 }
 
+void Details::setColorMode(int mode)
+{
+    colormode = mode;
+}
+
 void Details::render()
 {
     nextpos = 0;
@@ -42,15 +48,14 @@ void Details::render()
     sf::Text params;
     std::ostringstream ss;
     ss << "PARAMETERS\n";
-    params.setFont(font);
+    setParams(params,headsiz,sf::Color::Red);
     params.setString(ss.str());
-    params.setCharacterSize(headsiz);
-    params.setFillColor(sf::Color::Red);
     params.setPosition((window->getSize().x - params.getLocalBounds().width)/2,nextpos);
-    nextpos += params.getLocalBounds().height;
+    nextpos += -3 +  params.getLocalBounds().height;
     window->draw(params);
     renderZoom();
     renderBounds();
+    renderColorDetails();
 }
 
 void Details::renderBounds()
@@ -60,12 +65,10 @@ void Details::renderBounds()
     sf::Text bounds;
     ss << std::fixed << std::setprecision(14);
     ss << "Lower left  \t" << bl.x <<" + "<<bl.y<<"i\n" << "Upper right \t"<<tr.x<<" + "<<tr.y<<"i\n";
-    bounds.setFont(font);
+    setParams(bounds,siz,sf::Color::Yellow);
     bounds.setString(ss.str());
-    bounds.setCharacterSize(siz);
-    bounds.setFillColor(sf::Color::Yellow);
     bounds.setPosition(10.0,nextpos);
-    nextpos += bounds.getLocalBounds().height;
+    nextpos += -3 +  bounds.getLocalBounds().height;
     window->draw(bounds);
 
 }
@@ -77,13 +80,25 @@ void Details::renderZoom()
     sf::Text zoom_info;
     std::ostringstream ss;
     ss << "Zoomfactor  \t\t "<<zoomfactor<<"\n" << "Total zoom ratio\t "<<totalzoom<<"\n";
-    zoom_info.setFont(font);
+    setParams(zoom_info,siz,sf::Color::Yellow);
     zoom_info.setString(ss.str());
-    zoom_info.setCharacterSize(siz);
-    zoom_info.setFillColor(sf::Color::Yellow);
     zoom_info.setPosition(10.0,nextpos);
-    nextpos += zoom_info.getLocalBounds().height;
+    nextpos += -3 +  zoom_info.getLocalBounds().height;
     window->draw(zoom_info);
+}
+
+
+void Details::renderColorDetails()
+{
+    int siz = 20;
+    sf::Text color_info;
+    std::ostringstream ss;
+    ss << "Colormode \t\t "<<colormode<<"\n";
+    setParams(color_info,siz,sf::Color::Yellow);
+    color_info.setString(ss.str());
+    color_info.setPosition(10.0,nextpos);
+    nextpos += -3 +color_info.getLocalBounds().height;
+    window->draw(color_info);
 }
 
 void Details::renderInstructions()
@@ -92,32 +107,49 @@ void Details::renderInstructions()
     sf::Text instructions[2];
     std::ostringstream ss;
     ss << "INSTRUCTIONS \n";
-    instructions[0].setFont(font);
+    setParams(instructions[0],headsiz,sf::Color::Red);
     instructions[0].setString(ss.str());
-    instructions[0].setCharacterSize(headsiz);
-    instructions[0].setFillColor(sf::Color::Red);
     instructions[0].setPosition((window->getSize().x - instructions[0].getLocalBounds().width)/2,nextpos);
-    nextpos += instructions[0].getLocalBounds().height;
+    nextpos += -3 +  instructions[0].getLocalBounds().height;
     ss.str("");
 
     window->draw(instructions[0]);
-    int siz = 18;
-    instructions[1].setFont(font);
-    ss << "Click with mouse to zoom with that point as focus\n";
-    ss << "Click the key A to toggle autozoom on or off\n";
-    ss << "Press the + or = key to increase zoomfactor\n";
-    ss << "Press the - or _ key to reduce zoomfactor\n";
-    ss << "Use the arrow keys to alter region of display\n";
-    ss << "Click S key to save current frame as an image\n";
-    ss << "Press D key or Esc key to alter between details and mandelbrot\n";    
-    ss << "Press I to alter color palette\n";
-    instructions[1].setString(ss.str());
-    instructions[1].setCharacterSize(siz);
-    instructions[1].setFillColor(sf::Color::Magenta);
-    instructions[1].setPosition(10,nextpos);
-    nextpos += instructions[1].getLocalBounds().height;
 
-    window->draw(instructions[1]);
+    setParams(instructions[1],18,sf::Color::Magenta);
+    printInstruction(instructions[1],"Zoom with point as focus","Mouse Click\n");
+    printInstruction(instructions[1],"Autozoom toggle","A Key\n");
+    printInstruction(instructions[1],"Increase zoomfactor","+ or = Key\n");
+    printInstruction(instructions[1],"Decrease zoomfactor","- or _ Key\n");
+    printInstruction(instructions[1],"Alter region of display","Arrow Keys\n");
+    printInstruction(instructions[1],"Save current frame as image","S Key\n");
+    printInstruction(instructions[1],"Toggle mandelbrot and details","D or Esc Key\n");
+    printInstruction(instructions[1],"Alter color mode (Algorithm \nof colouring)","1,2,3,4,5,6 Keys\n\n");
+    printInstruction(instructions[1],"Cyclic shift of color palette","I Key\n");
+
+}
+
+
+void Details::setParams(sf::Text &text, int siz, sf::Color col)
+{
+    text.setFont(font);
+    text.setCharacterSize(siz);
+    text.setFillColor(col);
+}
+
+void Details::printInstruction(sf::Text &text, std::string requirement, std::string action)
+{
+    int depth = 0;
+    text.setString(requirement);
+    text.setPosition(10,nextpos);
+    text.setFillColor(sf::Color::Magenta);
+    depth = text.getLocalBounds().height;
+    window->draw(text);
     
+    text.setString(action);
+    text.setPosition(window->getSize().x/2,nextpos);
+    text.setFillColor(sf::Color::Cyan);
+    window->draw(text);
+    depth = std::max(depth,static_cast<int>(text.getLocalBounds().height));
+    nextpos += -9 + depth;
 
 }

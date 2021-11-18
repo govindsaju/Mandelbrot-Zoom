@@ -53,6 +53,17 @@ void Renderer::updateMousePos()
     mousePos = sf::Mouse::getPosition(*window);
 }
 
+//checks if given point is inside or not
+bool Renderer::pointInside(Complex c)
+{
+    Complex d1 = events.top_right-c;
+    Complex d2 = c-events.bot_left;
+
+    if ((d1.x<0 and d2.x<0 and d1.y<0 and d1.x<0) or (d1.x>0 and d2.x>0 and d1.y>0 and d2.y>0))
+        return true;
+    else return false;
+}
+
 //Function to perform the zoom operation with c as focus and zoomfactor as factor of zoom in each dimension
 void Renderer::zoom(Complex c)
 {
@@ -84,8 +95,15 @@ void Renderer::update()
             zoom(getClickComplex());
         }
         else if (events.autoZoom)
-        {
+        {   
+            if (pointInside(autoZoomFocus))
             zoom(autoZoomFocus);
+            else
+            {
+                Complex diag = events.top_right-events.bot_left;
+                events.bot_left = autoZoomFocus-diag/2;
+                events.top_right = autoZoomFocus +diag/2;
+            }
         }
         mandelbrot->update(events.bot_left,events.top_right);
     }
@@ -94,6 +112,7 @@ void Renderer::update()
         events.details.setZoomFactor(events.zoomfactor);
         events.details.setBounds(events.bot_left,events.top_right);
         events.details.setTotalZoom(total_zoom_factor);
+        events.details.setColorMode(mandelbrot->getColorMode());
     }
 }
 

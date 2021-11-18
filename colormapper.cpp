@@ -94,7 +94,7 @@ void ColorMapper::CyclicHSVNegativeSetup()
     ColorRGB col;
     for (int i=0;i<palette_size;i++)
     {
-        col = HSVtoRGB(ColorHSV(hue,0.5,0.7));
+        col = HSVtoRGB(ColorHSV(hue,0.7,0.7));
         col.r = 255-col.r;
         col.g = 255-col.g;
         col.b = 255-col.b;

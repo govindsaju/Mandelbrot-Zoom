@@ -39,6 +39,8 @@ private:
     //colorshift refers to the cyclic rotation that is applied to the palette
     int colorshift;
 
+    //stores the colormode
+    int colormode;
 
 
 public:
@@ -110,6 +112,12 @@ public:
      * @param the mode to determine which algorithm is to be used to colour
      */
     void setColorMode(int i);
+
+    /**
+     * @brief Get the value of the color mode 
+     * @return int value of the color mode
+     */
+    int getColorMode();
 };
 
 #endif 

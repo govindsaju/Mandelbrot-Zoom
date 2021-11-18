@@ -9,6 +9,7 @@ Mandelbrot::Mandelbrot(int _dimx,int _dimy) : cm(_dimx,_dimy) , colors(itersize+
     pixels = new sf::Vertex[_dimx*_dimy];
     colorshift = 0;
     max_iterations = itersize;
+    colormode = 1;
 }
 
 //destructor for mandelbrot object
@@ -109,5 +110,11 @@ void Mandelbrot::updateMaxIterations()
 //sets the mode of colouring in colormapper object
 void Mandelbrot::setColorMode(int mod)
 {
+    colormode = mod;
     colors.setMode(mod);
+}
+
+int Mandelbrot::getColorMode()
+{
+    return colormode;
 }

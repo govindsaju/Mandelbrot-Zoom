@@ -12,10 +12,15 @@ private:
     double zoomfactor;
     double totalzoom;
     int nextpos;
+    int colormode;
 
     void renderInstructions();
     void renderZoom();
     void renderBounds();
+    void renderColorDetails();
+    void setParams(sf::Text &text, int font_size,sf::Color);
+    void printInstruction(sf::Text &text, std::string requirement, std::string action);
+
 
 public:
     Details();
@@ -24,4 +29,5 @@ public:
     void setWindow(sf::RenderWindow* _window);
     void setBounds(Complex _bl, Complex _tr);
     void setTotalZoom(double val);
+    void setColorMode(int mode);
 };

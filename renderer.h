@@ -84,6 +84,15 @@ private:
      */
     bool mouseInWindow();
 
+    /**
+     * @brief Checks if given point is inside or not
+     * 
+     * @param c Complex value to be checked
+     * @return true if point is inside current range
+     * @return false if point is outside current range
+     */
+    bool pointInside(Complex c);
+
 public:
     
     //stores the value of the total zoom that has been done since the rendering started

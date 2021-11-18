@@ -57,7 +57,7 @@ void EventManager::solveKeyStrokes()
             mandelbrot->updateColorShift();
             break;
         
-        case  sf::Keyboard::Equal :
+        case sf::Keyboard::Equal :
         case sf::Keyboard::Add :
             zoomfactor += 0.03;
             break;
