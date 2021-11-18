@@ -9,11 +9,9 @@
 
 #include <math.h>
 #include <SFML/Graphics.hpp>
-#include <thread>
 #include "complex.h"
 #include "coordinatemapper.h"
 #include "colormapper.h"
-#include "multithreading.h"
 
 /**
  * @brief Class for rendering the mandelbrot set given coordinates on complex plane
@@ -73,7 +71,6 @@ public:
      */
     void update(const Complex &_bl,const Complex &_ur);
 
-    void update_multithreaded(const Complex &_bl, const Complex &ur);
 
     void updateMaxIterations();
 

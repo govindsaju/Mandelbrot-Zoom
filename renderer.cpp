@@ -87,7 +87,6 @@ void Renderer::update()
         {
             zoom(autoZoomFocus);
         }
-        //mandelbrot->update_multithreaded(events.bot_left,events.top_right);
         mandelbrot->update(events.bot_left,events.top_right);
     }
     else

@@ -1,5 +1,4 @@
 #include "mandelbrot.h"
-#define numthreads 8
 #define itersize 200
 
 //constructor for mandelbrot object
@@ -79,36 +78,6 @@ void Mandelbrot::update(const Complex &bl, const Complex &tr)
 }
 
 
-void Mandelbrot::update_multithreaded(const Complex &bl, const Complex &tr)
-{
-    cm.update(bl,tr);
-    std::vector<sf::Vertex> vertices[numthreads];
-    std::thread threads[numthreads];
-
-    for (int i=0;i<numthreads;i++)
-    {
-        threads[i] = std::thread((RunThread()),i,colors,std::ref(vertices[i]),cm,colorshift,dimx,dimy,numthreads,itersize);
-
-    }
-
-    for (int i=0;i<numthreads;i++)
-    {
-        threads[i].join();
-    }
-
-    for (int i=0;i<dimx;i++)
-    {
-        int compartment_number = i/(dimx/numthreads);
-        int i_inside = i - (compartment_number * (dimx/numthreads));
-        for (int j=0;j<dimy;j++)
-        {
-
-            pixels[i*dimy+j] = vertices[compartment_number][i_inside * dimy + j];
-        }
-    }
-
-
-}
 //returns the pixelarray to plot on the window
 sf::Vertex* Mandelbrot::getPixels()
 {   
