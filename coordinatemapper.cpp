@@ -19,8 +19,8 @@ void CoordinateMapper::update(Complex _bl, Complex _tr)
 
 }
 
+//returns complex val mapped to (i,j)
 Complex CoordinateMapper::findmapping(int i, int j)
 {
-    //return tl + i*x_incr + j*y_incr;
     return Complex(tl.x+i*x_incr.x + j*y_incr.x,tl.y+i*x_incr.y+j*y_incr.y);
 }

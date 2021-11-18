@@ -14,8 +14,13 @@
  */
 class CoordinateMapper{
 private:
+    //the dimensions of the window
     int dimx,dimy;
+
+    //the values mapped to top left, bottom right, bottom left and top right
     Complex tl,br,bl,tr;
+
+    //Values of increment along x axis and y axis on moving 1 pixel
     Complex x_incr,y_incr;
 public:
 
@@ -34,6 +39,12 @@ public:
      */
     void update(Complex bl, Complex tr);
 
+    /**
+     * @brief Finds the complex value mapped to the coordinate in the window coordinate frame
+     * @param i X axis coordinate in window frame
+     * @param j Y axis coordinate in window frame
+     * @return Complex value mapped to point (i,j)
+     */
     Complex findmapping(int i, int j);
 };
 
