@@ -1,5 +1,6 @@
 #include "details.h"
 
+//Constructor
 Details::Details()
 {
     if (!font.loadFromFile("DejaVuSerifCondensed.ttf"))
@@ -13,32 +14,38 @@ Details::Details()
     colormode = 1;
 }
 
+//sets zoom factor
 void Details::setZoomFactor(double zm)
 {
     zoomfactor = zm;
 }
 
+//sets window pointer
 void Details::setWindow(sf::RenderWindow* _window)
 {
     window = _window;
 }
 
+//sets the bottom left and top right complex value 
 void Details::setBounds(Complex _bl, Complex _tr)
 {
     bl = _bl;
     tr = _tr;
 }
 
+//Sets the total zoom value
 void Details::setTotalZoom(double val)
 {
     totalzoom = val;
 }
 
+//sets the current colormode
 void Details::setColorMode(int mode)
 {
     colormode = mode;
 }
 
+//renders all details on screen
 void Details::render()
 {
     nextpos = 0;
@@ -58,6 +65,7 @@ void Details::render()
     renderColorDetails();
 }
 
+//renders the current bounds
 void Details::renderBounds()
 {
     int siz = 20;
@@ -73,6 +81,7 @@ void Details::renderBounds()
 
 }
 
+//renders the zoom related information
 void Details::renderZoom()
 {
     int siz = 20;
@@ -87,7 +96,7 @@ void Details::renderZoom()
     window->draw(zoom_info);
 }
 
-
+//renders the color related information
 void Details::renderColorDetails()
 {
     int siz = 20;
@@ -101,6 +110,7 @@ void Details::renderColorDetails()
     window->draw(color_info);
 }
 
+//renders the instructions
 void Details::renderInstructions()
 {
     int headsiz = 30;
@@ -128,7 +138,7 @@ void Details::renderInstructions()
 
 }
 
-
+//used to initalise the text object
 void Details::setParams(sf::Text &text, int siz, sf::Color col)
 {
     text.setFont(font);
@@ -136,6 +146,7 @@ void Details::setParams(sf::Text &text, int siz, sf::Color col)
     text.setFillColor(col);
 }
 
+//used to format the printing of instructions
 void Details::printInstruction(sf::Text &text, std::string requirement, std::string action)
 {
     int depth = 0;
