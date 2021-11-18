@@ -11,7 +11,7 @@ EventManager::EventManager()
     window = nullptr;
     bot_left = Complex(-2,-2);
     top_right = Complex(2,2);
-    zoomfactor = 1.05;
+    zoomfactor = 1.25;
     isDetails=false;
     autoZoom = false;
 }

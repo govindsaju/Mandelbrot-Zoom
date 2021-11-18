@@ -20,5 +20,5 @@ int main()
     auto end = chrono::system_clock::now();     //time of completion
     auto time = std::chrono::duration_cast<std::chrono::seconds>(end-start);    //time elapsed
 
-    cout<<"FPS :"<<counter/time.count()<<"\n";  
+    cout<<"Total FPS :"<<counter/time.count()<<"\n";  
 }

@@ -117,14 +117,14 @@ void Details::renderInstructions()
 
     setParams(instructions[1],18,sf::Color::Magenta);
     printInstruction(instructions[1],"Zoom with point as focus","Mouse Click\n");
-    printInstruction(instructions[1],"Autozoom toggle","A Key\n");
-    printInstruction(instructions[1],"Increase zoomfactor","+ or = Key\n");
-    printInstruction(instructions[1],"Decrease zoomfactor","- or _ Key\n");
-    printInstruction(instructions[1],"Alter region of display","Arrow Keys\n");
-    printInstruction(instructions[1],"Save current frame as image","S Key\n");
-    printInstruction(instructions[1],"Toggle mandelbrot and details","D or Esc Key\n");
-    printInstruction(instructions[1],"Alter color mode (Algorithm \nof colouring)","1,2,3,4,5,6 Keys\n\n");
-    printInstruction(instructions[1],"Cyclic shift of color palette","I Key\n");
+    printInstruction(instructions[1],"Alter region of display","Press Arrow Keys\n");
+    printInstruction(instructions[1],"Toggle autozoom on or off","Press Key  A\n");
+    printInstruction(instructions[1],"Increase Zoomfactor","Press Key  + or =\n");
+    printInstruction(instructions[1],"Decrease Zoomfactor","Press Key  - or _\n");
+    printInstruction(instructions[1],"Save current frame as image","Press Key  S\n");
+    printInstruction(instructions[1],"Toggle Mandelbrot and details","Press Key  D or Esc\n");
+    printInstruction(instructions[1],"Alter color mode (Algorithm \nof colouring)","Press Keys  1,2,3,4,5,6\n\n");
+    printInstruction(instructions[1],"Cyclic shift of color palette","Press Key  I\n");
 
 }
 
