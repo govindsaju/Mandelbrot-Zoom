@@ -25,5 +25,12 @@ t max_3(const t &a, const t &b, const t&c);
  */
 bool isEquals(const double& a, const double &b);
 
+/**
+ * @brief Compares luminosity of colors a and b
+ * @param a Color
+ * @param b Color
+ * @return true if luminosity of a < luminosity of b
+ * @return false luminosity of b >= luminosity of a
+ */
 bool compareLuminosity(ColorRGB a, ColorRGB b);
 

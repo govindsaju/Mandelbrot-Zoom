@@ -53,6 +53,7 @@ sf::Color Mandelbrot::getColor(Complex c)
     return c1;
 }
 
+//updates pixel array with pixel (i,j)
 void Mandelbrot::update_pixel(int i,int j)
 {
     pixels[i*dimy + j].position.x = i;
@@ -97,6 +98,7 @@ void Mandelbrot::updateColorShift(int delta)
     colorshift += delta;
 }
 
+//updates max iterations based on the current area mapped
 void Mandelbrot::updateMaxIterations()
 {
     double magnitude = (tr-bl).absval();
@@ -104,6 +106,7 @@ void Mandelbrot::updateMaxIterations()
     max_iterations = std::max(max_iterations,itersize);
 }
 
+//sets the mode of colouring in colormapper object
 void Mandelbrot::setColorMode(int mod)
 {
     colors.setMode(mod);

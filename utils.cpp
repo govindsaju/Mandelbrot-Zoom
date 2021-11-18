@@ -32,6 +32,7 @@ bool isEquals(const double& a, const double &b)
     }
 }
 
+//Compares luminosity of a and b, returns true if l(a) < l(b)
 bool compareLuminosity(ColorRGB a, ColorRGB b)
 {
     double l1 = 0.241* a.r + 0.691*a.g + 0.068 * a.b;

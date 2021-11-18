@@ -36,7 +36,9 @@ private:
     //Event manager to log all events and take appropriate actions
     EventManager events;
 
+    //The focus point for autozoom
     Complex autoZoomFocus;
+
     /**
      * @brief Initialises the variables of the class.
      */
@@ -61,14 +63,12 @@ private:
 
     /**
      * @brief A function to perform the zoom operation on the mandelbrot set, factor for zooming obtained from event manager
-     * 
      * @param Complex c is the focus at which the zoom operation is performed
      */
     void zoom(Complex c);
 
     /**
      * @brief Get the complex number currently mapped to the current mouse position
-     * 
      * @return Complex value which is mapped to current mouse position
      */
     Complex getClickComplex();

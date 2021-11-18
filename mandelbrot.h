@@ -30,7 +30,7 @@ private:
     //dimensions of the window
     int dimx,dimy;
 
-
+    //maintains the max iterations, it is a function of the area on complex plane mapped to the window
     int max_iterations;
 
     //object to store a color palette, used to assign colours to complex numbers depending on speed of convergence
@@ -71,12 +71,13 @@ public:
      */
     void update(const Complex &_bl,const Complex &_ur);
 
-
+    /**
+     * @brief Updates the max iterations based on current coordinate mapping
+     */
     void updateMaxIterations();
 
     /**
      * @brief Get the array of pixels to paint the entire display window
-     * 
      * @return sf::Vertex* An array of pixels to be plotted on screen
      */
     sf::Vertex* getPixels();
@@ -91,8 +92,7 @@ public:
     Complex getComplexVal(int xcoord, int ycoord);
 
     /**
-     * @brief Increases the colorshift by delta
-     * 
+     * @brief Increases the colorshift by delta, refers to the shift in start point of cyclic palette
      * @param delta value by which colorshift is increased
      */
     void updateColorShift(int delta=10);
@@ -105,6 +105,10 @@ public:
      */
     void update_pixel(int i,int j);
 
+    /**
+     * @brief Set the Color mode in the colormapper object
+     * @param the mode to determine which algorithm is to be used to colour
+     */
     void setColorMode(int i);
 };
 
