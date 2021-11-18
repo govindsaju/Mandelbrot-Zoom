@@ -38,111 +38,150 @@ ColorMapper::ColorMapper(int _pallete_size, int _mode) :  palette_size(_pallete_
     setupPalette();
 }
 
-//used to setup pallete by drawing uniformly from the colour cycle
+
+//Used to setup palette by calling corresponding function based on current mode
 void ColorMapper::setupPalette()
 {
     if (mode==1)
-        {
-        double increment = 360.0/palette_size;
-        double hue = 0.0;
-        for (int i=0;i<palette_size;i++)
-        {
-            palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,1.0,1.0)));
-            hue += increment;
-        }
+    {
+        CyclicHSVSetup();
     }
     else if (mode==2)
     {
-        double increment = 360.0/palette_size;
-        double hue = 0.0;
-        ColorRGB col;
-        for (int i=0;i<palette_size;i++)
-        {
-            col = HSVtoRGB(ColorHSV(hue,0.5,0.7));
-            col.r = 255-col.r;
-            col.g = 255-col.g;
-            col.b = 255-col.b;
-            palette[i] = ConvertToSFML(col);
-            hue += increment;
-        }
+        CyclicHSVNegativeSetup();
     }
     else if (mode==3)
     {
-        double h,s,v;
-        std::priority_queue<std::tuple<double,double,double>> pq;
-        for (int i=0;i<palette_size;i++)
-        {
-            h = (rand()%36000)/100.0;
-            s = (rand()%100)/100.0;
-            v = (rand()%100)/100.0;
-            pq.push(std::make_tuple(h,s,v));
-        }
-        for (int i=0;i<palette_size;i++)
-        {
-            std::tuple<double,double,double> curr;
-            curr = pq.top();
-            pq.pop();
-            palette[palette_size-i-1] = ConvertToSFML(HSVtoRGB(ColorHSV(std::get<0>(curr),std::get<1>(curr),std::get<2>(curr))));
-        }
-
+        HSVHeapSortAscendingSetup();
     }
     else if (mode==4)
     {
-        double h,s,v;
-        std::priority_queue<std::tuple<double,double,double>> pq;
-        for (int i=0;i<palette_size;i++)
-        {
-            h = (rand()%36000)/100.0;
-            s = (rand()%100)/100.0;
-            v = (rand()%100)/100.0;
-            pq.push(std::make_tuple(h,s,v));
-        }
-        for (int i=0;i<palette_size;i++)
-        {
-            std::tuple<double,double,double> curr;
-            curr = pq.top();
-            pq.pop();
-            palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(std::get<0>(curr),std::get<1>(curr),std::get<2>(curr))));
-        }
-
+        HSVHeapSortDescendingSetup();
     }
 
     else if (mode==5)
     {
-        std::priority_queue<ColorRGB,std::vector<ColorRGB>,std::function<bool(ColorRGB,ColorRGB)>> pq(compareLuminosity);
-        ColorRGB col;
-        for (int i=0;i<palette_size;i++)
-        {
-            col.r = rand()%256;
-            col.g = rand()%256;
-            col.b = rand()%256;
-            pq.push(col);
-        }
-
-        for (int i=0;i<palette_size;i++)
-        {
-            palette[i] = ConvertToSFML(pq.top());
-            pq.pop();
-        }
+        LuminosityAscendingSetup();
     }
 
     else if (mode==6)
     {
-        std::priority_queue<ColorRGB,std::vector<ColorRGB>,std::function<bool(ColorRGB,ColorRGB)>> pq(compareLuminosity);
-        ColorRGB col;
-        for (int i=0;i<palette_size;i++)
-        {
-            col.r = rand()%256;
-            col.g = rand()%256;
-            col.b = rand()%256;
-            pq.push(col);
-        }
+        LuminosityDescendingSetup();
+    }
+    else 
+    {
+        CyclicHSVSetup();
+    }
+}
 
-        for (int i=0;i<palette_size;i++)
-        {
-            palette[palette_size - i - 1] = ConvertToSFML(pq.top());
-            pq.pop();
-        }
+//Algorithm for mode 1
+void ColorMapper::CyclicHSVSetup()
+{
+    double increment = 360.0/palette_size;
+    double hue = 0.0;
+    for (int i=0;i<palette_size;i++)
+    {
+        palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,1.0,1.0)));
+        hue += increment;
+    }
+}
+
+//Algorithm for mode 2
+void ColorMapper::CyclicHSVNegativeSetup()
+{
+    double increment = 360.0/palette_size;
+    double hue = 0.0;
+    ColorRGB col;
+    for (int i=0;i<palette_size;i++)
+    {
+        col = HSVtoRGB(ColorHSV(hue,0.5,0.7));
+        col.r = 255-col.r;
+        col.g = 255-col.g;
+        col.b = 255-col.b;
+        palette[i] = ConvertToSFML(col);
+        hue += increment;
+    }
+}
+
+//Algorithm for mode 3
+void ColorMapper::HSVHeapSortAscendingSetup()
+{
+    double h,s,v;
+    std::priority_queue<std::tuple<double,double,double>> pq;
+    for (int i=0;i<palette_size;i++)
+    {
+        h = (rand()%36000)/100.0;
+        s = (rand()%100)/100.0;
+        v = (rand()%100)/100.0;
+        pq.push(std::make_tuple(h,s,v));
+    }
+    for (int i=0;i<palette_size;i++)
+    {
+        std::tuple<double,double,double> curr;
+        curr = pq.top();
+        pq.pop();
+        palette[palette_size-i-1] = ConvertToSFML(HSVtoRGB(ColorHSV(std::get<0>(curr),std::get<1>(curr),std::get<2>(curr))));
+    }
+}
+
+//Algorithm for mode 4
+void ColorMapper::HSVHeapSortDescendingSetup()
+{
+    double h,s,v;
+    std::priority_queue<std::tuple<double,double,double>> pq;
+    for (int i=0;i<palette_size;i++)
+    {
+        h = (rand()%36000)/100.0;
+        s = (rand()%100)/100.0;
+        v = (rand()%100)/100.0;
+        pq.push(std::make_tuple(h,s,v));
+    }
+    for (int i=0;i<palette_size;i++)
+    {
+        std::tuple<double,double,double> curr;
+        curr = pq.top();
+        pq.pop();
+        palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(std::get<0>(curr),std::get<1>(curr),std::get<2>(curr))));
+    }
+}
+
+//Algorithm for mode 5
+void ColorMapper::LuminosityAscendingSetup()
+{
+    std::priority_queue<ColorRGB,std::vector<ColorRGB>,std::function<bool(ColorRGB,ColorRGB)>> pq(compareLuminosity);
+    ColorRGB col;
+    for (int i=0;i<palette_size;i++)
+    {
+        col.r = rand()%256;
+        col.g = rand()%256;
+        col.b = rand()%256;
+        pq.push(col);
+    }
+
+    for (int i=0;i<palette_size;i++)
+    {
+        palette[i] = ConvertToSFML(pq.top());
+        pq.pop();
+    }
+}
+
+//Algorithm for mode 6
+void ColorMapper::LuminosityDescendingSetup()
+{
+    std::priority_queue<ColorRGB,std::vector<ColorRGB>,std::function<bool(ColorRGB,ColorRGB)>> pq(compareLuminosity);
+    ColorRGB col;
+    for (int i=0;i<palette_size;i++)
+    {
+        col.r = rand()%256;
+        col.g = rand()%256;
+        col.b = rand()%256;
+        pq.push(col);
+    }
+
+    for (int i=0;i<palette_size;i++)
+    {
+        palette[palette_size - i - 1] = ConvertToSFML(pq.top());
+        pq.pop();
     }
 }
 
@@ -257,6 +296,7 @@ sf::Color ColorMapper::ConvertToSFML(ColorRGB c)
     return sf::Color(c.r,c.g,c.b);
 } 
 
+//Updates size of palette
 void ColorMapper::updateSize(int k)
 {
     palette_size = k;
@@ -264,8 +304,11 @@ void ColorMapper::updateSize(int k)
     setupPalette();
 }
 
+//sets the mode for colormapper
 void ColorMapper::setMode(int mod)
 {
     mode = mod;
     setupPalette();
 }
+
+
