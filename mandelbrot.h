@@ -107,6 +107,8 @@ public:
      * @param j 
      */
     void update_pixel(int i,int j);
+
+    void setColorMode(int i);
 };
 
 #endif 

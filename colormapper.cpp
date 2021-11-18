@@ -33,7 +33,7 @@ ColorHSV::ColorHSV()
 }
 
 //Constructors for color mapper object
-ColorMapper::ColorMapper(int _pallete_size) :  palette_size(_pallete_size) , palette(palette_size)
+ColorMapper::ColorMapper(int _pallete_size, int _mode) :  palette_size(_pallete_size) , palette(palette_size) , mode(_mode)
 {
     setupPalette();
 }
@@ -41,12 +41,55 @@ ColorMapper::ColorMapper(int _pallete_size) :  palette_size(_pallete_size) , pal
 //used to setup pallete by drawing uniformly from the colour cycle
 void ColorMapper::setupPalette()
 {
-    double increment = 360.0/palette_size;
-    double hue = 0.0;
-    for (int i=0;i<palette_size;i++)
+    if (mode==1)
+        {
+        double increment = 360.0/palette_size;
+        double hue = 0.0;
+        for (int i=0;i<palette_size;i++)
+        {
+            palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,0.6,0.7)));
+            hue += increment;
+        }
+    }
+    else if (mode==2)
     {
-        palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,0.6,0.7)));
-        hue += increment;
+        double h,s,v;
+        std::priority_queue<std::tuple<double,double,double>> pq;
+        for (int i=0;i<palette_size;i++)
+        {
+            h = (rand()%36000)/100.0;
+            s = (rand()%100)/100.0;
+            v = (rand()%100)/100.0;
+            pq.push(std::make_tuple(h,s,v));
+        }
+        for (int i=0;i<palette_size;i++)
+        {
+            std::tuple<double,double,double> curr;
+            curr = pq.top();
+            pq.pop();
+            palette[palette_size-i-1] = ConvertToSFML(HSVtoRGB(ColorHSV(std::get<0>(curr),std::get<1>(curr),std::get<2>(curr))));
+        }
+
+    }
+    else if (mode==3)
+    {
+        double h,s,v;
+        std::priority_queue<std::tuple<double,double,double>> pq;
+        for (int i=0;i<palette_size;i++)
+        {
+            h = (rand()%36000)/100.0;
+            s = (rand()%100)/100.0;
+            v = (rand()%100)/100.0;
+            pq.push(std::make_tuple(h,s,v));
+        }
+        for (int i=0;i<palette_size;i++)
+        {
+            std::tuple<double,double,double> curr;
+            curr = pq.top();
+            pq.pop();
+            palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(std::get<0>(curr),std::get<1>(curr),std::get<2>(curr))));
+        }
+
     }
 }
 
@@ -160,3 +203,16 @@ sf::Color ColorMapper::ConvertToSFML(ColorRGB c)
 {
     return sf::Color(c.r,c.g,c.b);
 } 
+
+void ColorMapper::updateSize(int k)
+{
+    palette_size = k;
+    palette.resize(k);
+    setupPalette();
+}
+
+void ColorMapper::setMode(int mod)
+{
+    mode = mod;
+    setupPalette();
+}

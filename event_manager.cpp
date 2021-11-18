@@ -103,7 +103,24 @@ void EventManager::solveKeyStrokes()
 
         case sf::Keyboard::A :
             autoZoom = !autoZoom;
+            break;
 
+        case sf::Keyboard::Num1 :
+        case sf::Keyboard::Numpad1 :
+            mandelbrot->setColorMode(1);
+            break; 
+
+
+        case sf::Keyboard::Num2 :
+        case sf::Keyboard::Numpad2 :
+            mandelbrot->setColorMode(2);
+            break; 
+
+
+        case sf::Keyboard::Num3 :
+        case sf::Keyboard::Numpad3 :
+            mandelbrot->setColorMode(3);
+            break; 
     }
 }
 

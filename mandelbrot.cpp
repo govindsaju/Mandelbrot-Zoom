@@ -134,3 +134,8 @@ void Mandelbrot::updateMaxIterations()
     max_iterations = itersize + 100*(-log10(magnitude/4));
     max_iterations = std::max(max_iterations,itersize);
 }
+
+void Mandelbrot::setColorMode(int mod)
+{
+    colors.setMode(mod);
+}

@@ -7,6 +7,8 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <tuple>
+#include <queue>
 
 /**
  * @brief Struct to store color of form r,g,b 
@@ -34,6 +36,8 @@ class ColorMapper{
     //size of pallete
     int palette_size;
 
+    int mode;
+
     /**
      * @brief Sets up the pallete with colour objects from SFML 
      */
@@ -43,7 +47,7 @@ public:
      * @brief Construct a new Color Mapper object
      * @param _pallete_size size of pallete required
      */
-    ColorMapper(int _pallete_size);
+    ColorMapper(int _pallete_size, int _mode = 3);
 
     //The pallete of colours
     std::vector<sf::Color> palette;
@@ -71,6 +75,10 @@ public:
      * @return sf::Color 
      */
     sf::Color ConvertToSFML(ColorRGB c);
+
+    void updateSize(int siz);
+
+    void setMode(int mod);
 };
 
 #endif 
