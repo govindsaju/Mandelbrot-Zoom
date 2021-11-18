@@ -121,6 +121,23 @@ void EventManager::solveKeyStrokes()
         case sf::Keyboard::Numpad3 :
             mandelbrot->setColorMode(3);
             break; 
+
+        case sf::Keyboard::Num4 :
+        case sf::Keyboard::Numpad4 :
+            mandelbrot->setColorMode(4);
+            break;
+
+        case sf::Keyboard::Num5 :
+        case sf::Keyboard::Numpad5 :
+            mandelbrot->setColorMode(5);
+            break; 
+
+        case sf::Keyboard::Num6 :
+        case sf::Keyboard::Numpad6 :
+            mandelbrot->setColorMode(6);
+            break; 
+
+
     }
 }
 

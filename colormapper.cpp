@@ -47,11 +47,26 @@ void ColorMapper::setupPalette()
         double hue = 0.0;
         for (int i=0;i<palette_size;i++)
         {
-            palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,0.6,0.7)));
+            palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(hue,1.0,1.0)));
             hue += increment;
         }
     }
     else if (mode==2)
+    {
+        double increment = 360.0/palette_size;
+        double hue = 0.0;
+        ColorRGB col;
+        for (int i=0;i<palette_size;i++)
+        {
+            col = HSVtoRGB(ColorHSV(hue,0.5,0.7));
+            col.r = 255-col.r;
+            col.g = 255-col.g;
+            col.b = 255-col.b;
+            palette[i] = ConvertToSFML(col);
+            hue += increment;
+        }
+    }
+    else if (mode==3)
     {
         double h,s,v;
         std::priority_queue<std::tuple<double,double,double>> pq;
@@ -71,7 +86,7 @@ void ColorMapper::setupPalette()
         }
 
     }
-    else if (mode==3)
+    else if (mode==4)
     {
         double h,s,v;
         std::priority_queue<std::tuple<double,double,double>> pq;
@@ -90,6 +105,44 @@ void ColorMapper::setupPalette()
             palette[i] = ConvertToSFML(HSVtoRGB(ColorHSV(std::get<0>(curr),std::get<1>(curr),std::get<2>(curr))));
         }
 
+    }
+
+    else if (mode==5)
+    {
+        std::priority_queue<ColorRGB,std::vector<ColorRGB>,std::function<bool(ColorRGB,ColorRGB)>> pq(compareLuminosity);
+        ColorRGB col;
+        for (int i=0;i<palette_size;i++)
+        {
+            col.r = rand()%256;
+            col.g = rand()%256;
+            col.b = rand()%256;
+            pq.push(col);
+        }
+
+        for (int i=0;i<palette_size;i++)
+        {
+            palette[i] = ConvertToSFML(pq.top());
+            pq.pop();
+        }
+    }
+
+    else if (mode==6)
+    {
+        std::priority_queue<ColorRGB,std::vector<ColorRGB>,std::function<bool(ColorRGB,ColorRGB)>> pq(compareLuminosity);
+        ColorRGB col;
+        for (int i=0;i<palette_size;i++)
+        {
+            col.r = rand()%256;
+            col.g = rand()%256;
+            col.b = rand()%256;
+            pq.push(col);
+        }
+
+        for (int i=0;i<palette_size;i++)
+        {
+            palette[palette_size - i - 1] = ConvertToSFML(pq.top());
+            pq.pop();
+        }
     }
 }
 

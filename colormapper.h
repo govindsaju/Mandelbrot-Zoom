@@ -9,6 +9,7 @@
 #include <vector>
 #include <tuple>
 #include <queue>
+#include <functional>
 
 /**
  * @brief Struct to store color of form r,g,b 
@@ -47,7 +48,7 @@ public:
      * @brief Construct a new Color Mapper object
      * @param _pallete_size size of pallete required
      */
-    ColorMapper(int _pallete_size, int _mode = 3);
+    ColorMapper(int _pallete_size, int _mode = 1);
 
     //The pallete of colours
     std::vector<sf::Color> palette;

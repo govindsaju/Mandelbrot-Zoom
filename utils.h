@@ -3,6 +3,7 @@
  * @brief Contains a few utility functions
  */
 
+#include "colormapper.h"
 
 /**
  * @brief returns min of 3 parameters
@@ -23,4 +24,6 @@ t max_3(const t &a, const t &b, const t&c);
  * @return true if equal, false if not equal
  */
 bool isEquals(const double& a, const double &b);
+
+bool compareLuminosity(ColorRGB a, ColorRGB b);
 
