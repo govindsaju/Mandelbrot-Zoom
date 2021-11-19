@@ -30,7 +30,7 @@ sf::Color Mandelbrot::getColor(Complex c)
         z = z*z + c;
         iteration+=1;
     }
-    bool converges = true;
+
     if (iteration>=max_iterations) return sf::Color(0,0,0); //if inside mandelbrot set, paint it black
 
     //converting iteration number to real number to reduce discreteness

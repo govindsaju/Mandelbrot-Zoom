@@ -1,16 +1,18 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <chrono>
+#include <thread>
 #include "renderer.h"
 using namespace std;
-
-#include <chrono>
 
 int main()
 {
     Renderer renderer;  //Renderer object to display the mandelbrot zoom
 
+    this_thread::sleep_for(chrono::seconds(3));
     auto start = chrono::system_clock::now();   //time counter to measure FPS
     double counter = 0;                       //Frame counter
+
     while (renderer.running())
     {
         counter+=1;
